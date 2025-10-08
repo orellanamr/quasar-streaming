@@ -58,7 +58,6 @@ export const MovieDetailsScreen: React.FC<MovieDetailsScreenProps> = ({ route, n
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
       
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Header Image */}
         <View style={styles.headerSection}>
           <Image
             source={{ uri: movie.posters.landscape.url }}
@@ -70,49 +69,64 @@ export const MovieDetailsScreen: React.FC<MovieDetailsScreenProps> = ({ route, n
             style={styles.backButton} 
             onPress={() => navigation.goBack()}
           >
-            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+            <Ionicons name="chevron-back" size={28} color="#FFFFFF" />
           </TouchableOpacity>
           
-          <View style={styles.headerOverlay}>
+          <View style={styles.headerRightControls}>
+            <TouchableOpacity style={styles.headerButton}>
+              <Ionicons name="bookmark-outline" size={24} color="#FFFFFF" />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.headerButton}>
+              <Ionicons name="share-outline" size={24} color="#FFFFFF" />
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.darkOverlay} />
+          
+          <View style={styles.movieInfoOverlay}>
             <Text style={styles.movieTitle}>{movie.title}</Text>
             <Text style={styles.movieMeta}>
-              {movie.year} • {movie.duration} • {movie.rating} • {movie.quality}
+              {movie.duration} • {movie.rating} • {movie.year} • {movie.quality}
             </Text>
+            
+            <View style={styles.heroActionButtons}>
+              <TouchableOpacity style={styles.playButton} onPress={handlePlayPress}>
+                <Ionicons name="play" size={20} color="#000000" />
+                <Text style={styles.playButtonText}>Play</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.addButton} onPress={handleAddPress}>
+                <Ionicons name="add" size={20} color="#FFFFFF" />
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.downloadButton} onPress={handleDownloadPress}>
+                <Ionicons name="download-outline" size={20} color="#FFFFFF" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
-        {/* Content */}
         <View style={styles.content}>
-          {/* Action Buttons */}
-          <View style={styles.actionButtons}>
-            <TouchableOpacity style={styles.playButton} onPress={handlePlayPress}>
-              <Ionicons name="play" size={20} color="#000000" />
-              <Text style={styles.playButtonText}>Play</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.actionButton} onPress={handleAddPress}>
-              <Ionicons name="add" size={20} color="#FFFFFF" />
-              <Text style={styles.actionButtonText}>Add</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.actionButton} onPress={handleDownloadPress}>
-              <Ionicons name="download-outline" size={20} color="#FFFFFF" />
-              <Text style={styles.actionButtonText}>Download</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Description */}
           <Text style={styles.description}>{movie.description}</Text>
 
-          {/* Similar Content */}
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Similar Content</Text>
-            <Text style={styles.sectionContent}>
-              Content IDs: {movie.similarContent.join(', ')}
-            </Text>
+            <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false}
+              style={styles.similarContentScroll}
+              contentContainerStyle={styles.similarContentContainer}
+            >
+              {[1, 2, 3, 4].map((index) => (
+                <View key={index} style={styles.similarContentCard}>
+                  <View style={styles.similarContentImage}>
+                    <Ionicons name="film-outline" size={24} color="#666666" />
+                  </View>
+                </View>
+              ))}
+            </ScrollView>
           </View>
 
-          {/* Expandable Sections */}
           <ExpandableSection title="Cast">
             <View style={styles.castContainer}>
               {movie.cast.map(renderCastMember)}
@@ -168,78 +182,95 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerSection: {
-    height: screenHeight * 0.4,
+    height: screenHeight * 0.5,
     position: 'relative',
   },
   headerImage: {
     width: '100%',
     height: '100%',
+    position: 'absolute',
   },
   backButton: {
     position: 'absolute',
-    top: 50,
+    top: 20,
     left: 16,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    borderRadius: 20,
+    padding: 8,
+    zIndex: 10,
+  },
+  headerRightControls: {
+    position: 'absolute',
+    top: 20,
+    right: 16,
+    flexDirection: 'row',
+    gap: 12,
+    zIndex: 10,
+  },
+  headerButton: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
     borderRadius: 20,
     padding: 8,
   },
-  headerOverlay: {
+  darkOverlay: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    padding: 16,
+    height: '35%',
     backgroundColor: 'rgba(0,0,0,0.6)',
+  },
+  movieInfoOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 20,
   },
   movieTitle: {
     color: '#FFFFFF',
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 4,
+    marginBottom: 8,
   },
   movieMeta: {
     color: '#CCCCCC',
     fontSize: 14,
+    marginBottom: 20,
   },
-  content: {
-    padding: 16,
-  },
-  actionButtons: {
+  heroActionButtons: {
     flexDirection: 'row',
-    marginBottom: 24,
-    gap: 12,
+    alignItems: 'center',
+    gap: 16,
   },
   playButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 6,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
     flex: 1,
     justifyContent: 'center',
   },
   playButtonText: {
     color: '#000000',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 6,
   },
-  actionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  addButton: {
     backgroundColor: 'rgba(255,255,255,0.2)',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 6,
-    flex: 1,
-    justifyContent: 'center',
+    borderRadius: 25,
+    padding: 12,
   },
-  actionButtonText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginLeft: 6,
+  downloadButton: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: 25,
+    padding: 12,
+  },
+  content: {
+    padding: 20,
   },
   description: {
     color: '#FFFFFF',
@@ -254,11 +285,27 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 12,
+  },
+  similarContentScroll: {
     marginBottom: 8,
   },
-  sectionContent: {
-    color: '#CCCCCC',
-    fontSize: 14,
+  similarContentContainer: {
+    paddingRight: 20,
+  },
+  similarContentCard: {
+    width: 120,
+    height: 68,
+    marginRight: 12,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  similarContentImage: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#333333',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   expandableContent: {
     paddingBottom: 16,
@@ -267,17 +314,20 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   castMember: {
-    marginBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
   },
   actorName: {
     color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14,
+    flex: 1,
   },
   characterName: {
     color: '#CCCCCC',
     fontSize: 14,
-    marginTop: 2,
+    flex: 1,
+    textAlign: 'right',
   },
   crewSection: {
     marginBottom: 12,
