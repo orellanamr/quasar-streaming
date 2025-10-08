@@ -3,13 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { DarkTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-
-// Screens
 import ExploreScreen from '../screens/ExploreScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { MovieDetailsScreen } from '../screens/MovieDetailsScreen';
-
-// Types
 import { Movie } from '../types/movie.types';
 
 export type RootStackParamList = {

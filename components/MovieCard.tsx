@@ -17,11 +17,9 @@ const { width: screenWidth } = Dimensions.get('window');
 export const MovieCard: React.FC<MovieCardProps> = ({ movie, layout, onPress, width }) => {
   const [imageError, setImageError] = useState(false);
   
-  // Calculate dimensions based on actual aspect ratios from data
   const cardWidth = width || (layout === 'portrait-card' ? screenWidth * 0.32 : screenWidth * 0.45);
   const isPortrait = layout === 'portrait-card';
   
-  // Use actual aspect ratios: 2:3 for portrait, 16:9 for landscape
   const cardHeight = isPortrait ? cardWidth * 1.5 : cardWidth * (9/16); // 2:3 vs 16:9
   
   const imageType = isPortrait ? 'portrait' : 'landscape';

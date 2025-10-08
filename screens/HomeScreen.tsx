@@ -74,7 +74,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       <StatusBar barStyle="light-content" backgroundColor="#000000" />
       
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Featured Movie Section */}
         <View style={styles.featuredSection}>
           <Image
             source={{ 
@@ -92,7 +91,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             </View>
           )}
           
-          {/* Dark Gradient Overlay */}
           <View style={styles.gradientOverlay} />
           
           <View style={styles.featuredContent}>
@@ -108,8 +106,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           </View>
         </View>
 
-        {/* Movie Sections */}
-        {/* First: You might like - override to portrait-card */}
         {data.containers
           .filter(container => container.id === 'you-might-like')
           .map((container: Container) => (
@@ -121,7 +117,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             />
           ))}
 
-        {/* Second: My List - override to landscape-card */}
         {data.containers
           .filter(container => container.id === 'my-list')
           .map((container: Container) => (
@@ -133,7 +128,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             />
           ))}
 
-        {/* Third: Upcoming (using trending data for demo) - landscape-card */}
         <HorizontalList
           container={{
             id: 'upcoming',
