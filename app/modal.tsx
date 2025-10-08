@@ -1,29 +1,29 @@
-import { Link } from 'expo-router';
-import { StyleSheet } from 'react-native';
-
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React from 'react';
+import { MovieDetailsScreen } from '../screens/MovieDetailsScreen';
+import { Movie } from '../types/movie.types';
 
 export default function ModalScreen() {
+  const router = useRouter();
+  const { movie: movieParam } = useLocalSearchParams();
+  
+  let movie: Movie;
+  try {
+    movie = typeof movieParam === 'string' ? JSON.parse(movieParam) : movieParam;
+  } catch (error) {
+    console.error('Error parsing movie data:', error);
+    router.back();
+    return null;
+  }
+
+  const navigation = {
+    goBack: () => router.back(),
+  };
+
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText type="title">This is a modal</ThemedText>
-      <Link href="/" dismissTo style={styles.link}>
-        <ThemedText type="link">Go to home screen</ThemedText>
-      </Link>
-    </ThemedView>
+    <MovieDetailsScreen 
+      route={{ params: { movie } }} 
+      navigation={navigation} 
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-});
