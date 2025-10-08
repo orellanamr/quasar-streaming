@@ -1,0 +1,220 @@
+{
+  "containers": [
+    {
+      "id": "trending",
+      "title": "Trending Now",
+      "layout": "portrait-card",
+      "items": [
+        {
+          "id": "movie1",
+          "title": "Oppenheimer",
+          "year": 2023,
+          "duration": "3H 00MIN",
+          "rating": "R",
+          "quality": "4K UHD",
+          "description": "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb. A gripping tale of scientific achievement, moral dilemmas, and historical consequences.",
+          "isTopMovie": true,
+          "similarContent": ["movie4", "movie8", "movie2"],
+          "posters": {
+            "portrait": {
+              "url": "https://s3.amazonaws.com/nightjarprod/content/uploads/sites/130/2023/06/01153825/aqZ75oN6yd7UTShYIMNlpSdDbbH-2-scaled.jpg",
+              "aspectRatio": "2/3"
+            },
+            "landscape": {
+              "url": "https://www.akureyri.is/static/news/lg/1711553284_oppenheimer02.jpg",
+              "aspectRatio": "16/9"
+            },
+            "thumbnail": {
+              "url": "https://media.wired.com/photos/64bae9eedaed59ebbf460ca6/4:3/w_2132,h_1599,c_limit/Oppenheimer-and-the-Dharma-of-Death-Culture.jpg",
+              "aspectRatio": "4/3"
+            }
+          },
+          "cast": [
+            {
+              "characterName": "J. Robert Oppenheimer",
+              "actorName": "Cillian Murphy"
+            },
+            {
+              "characterName": "Katherine Oppenheimer",
+              "actorName": "Emily Blunt"
+            },
+            {
+              "characterName": "Leslie Groves",
+              "actorName": "Matt Damon"
+            }
+          ],
+          "crew": {
+            "directors": ["Christopher Nolan"],
+            "producers": ["Emma Thomas", "Charles Roven"],
+            "writers": ["Christopher Nolan"]
+          },
+          "classification": {
+            "rating": "+18",
+            "advisoryContent": [
+              "Some Sexual Content",
+              "Nudity",
+              "Language"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "you-might-like",
+      "title": "You Might Like",
+      "layout": "landscape-card",
+      "items": [
+        {
+          "id": "movie2",
+          "title": "Barbie",
+          "year": 2023,
+          "duration": "1H 54MIN",
+          "rating": "PG-13",
+          "quality": "4K UHD",
+          "description": "Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land. However, when they get a chance to go to the real world, they soon discover the joys and perils of living among humans.",
+          "isTopMovie": false,
+          "similarContent": ["movie10", "movie1", "movie4"],
+          "posters": {
+            "portrait": {
+              "url": "https://play-lh.googleusercontent.com/-9TH8SNQAlVgNnQKn8fwogFspikmJJNKayZJWhTPWiaUrpoK21-A_sySTB9D1KGP1Vjotpmfzllw4HKUKA",
+              "aspectRatio": "2/3"
+            },
+            "landscape": {
+              "url": "https://www.miarevista.es/wp-content/uploads/sites/3/2024/02/01/65bb58d02a079-schema.jpeg",
+              "aspectRatio": "16/9"
+            },
+            "thumbnail": {
+              "url": "https://media.vogue.co.uk/photos/64130ed6b969888aada448cb/4:3/w_2803,h_2102,c_limit/rev-1-BARBIE-TP-0002_High_Res_JPEG.jpeg",
+              "aspectRatio": "4/3"
+            }
+          },
+          "cast": [
+            {
+              "characterName": "Barbie",
+              "actorName": "Margot Robbie"
+            },
+            {
+              "characterName": "Ken",
+              "actorName": "Ryan Gosling"
+            }
+          ],
+          "crew": {
+            "directors": ["Greta Gerwig"],
+            "producers": ["Margot Robbie", "Tom Ackerley"],
+            "writers": ["Greta Gerwig", "Noah Baumbach"]
+          },
+          "classification": {
+            "rating": "+13",
+            "advisoryContent": [
+              "Suggestive References",
+              "Brief Language"
+            ]
+          }
+        },
+        {
+          "id": "movie3",
+          "title": "Poor Things",
+          "year": 2023,
+          "duration": "2H 21MIN",
+          "rating": "R",
+          "quality": "4K UHD",
+          "description": "The incredible tale of Bella Baxter, a young woman brought back to life by the brilliant and unorthodox scientist Dr. Godwin Baxter.",
+          "isTopMovie": false,
+          "similarContent": ["movie7", "movie6", "movie8"],
+          "posters": {
+            "portrait": {
+              "url": "https://s29288.pcdn.co/wp-content/uploads/2024/04/Poor-Things-Poster-2-copy.jpg",
+              "aspectRatio": "2/3"
+            },
+            "landscape": {
+              "url": "https://m.media-amazon.com/images/M/MV5BYWU2MjRjZTYtMjVkMS00MTBjLWFiMTAtYmZlYTk1YjkyMWFkXkEyXkFqcGc@._V1_.jpg",
+              "aspectRatio": "16/9"
+            },
+            "thumbnail": {
+              "url": "https://cdn.theasc.com/Poor-Things-Featured.jpg",
+              "aspectRatio": "4/3"
+            }
+          },
+          "cast": [
+            {
+              "characterName": "Bella Baxter",
+              "actorName": "Emma Stone"
+            },
+            {
+              "characterName": "Dr. Godwin Baxter",
+              "actorName": "Willem Dafoe"
+            }
+          ],
+          "crew": {
+            "directors": ["Yorgos Lanthimos"],
+            "producers": ["Ed Guiney", "Andrew Lowe"],
+            "writers": ["Tony McNamara"]
+          },
+          "classification": {
+            "rating": "+18",
+            "advisoryContent": [
+              "Strong Sexual Content",
+              "Graphic Nudity",
+              "Language"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "my-list",
+      "title": "My List",
+      "layout": "portrait-card",
+      "items": [
+        {
+          "id": "movie7",
+          "title": "Napoleon",
+          "year": 2023,
+          "duration": "2H 38MIN",
+          "rating": "R",
+          "quality": "4K UHD",
+          "description": "An epic historical drama that details the checkered rise and fall of French Emperor Napoleon Bonaparte and his relentless journey to power through the prism of his addictive relationship with his wife, Josephine.",
+          "isTopMovie": false,
+          "similarContent": ["movie2", "movie10", "movie8"],
+          "posters": {
+            "portrait": {
+              "url": "https://ruinedchapel.com/wp-content/uploads/2023/11/napoleon-.png",
+              "aspectRatio": "2/3"
+            },
+            "landscape": {
+              "url": "https://i.ytimg.com/vi/066QqmqT_EE/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBbcgo9GaskGUyZ22QfnA4C4QHL5A",
+              "aspectRatio": "16/9"
+            },
+            "thumbnail": {
+              "url": "https://variety.com/wp-content/uploads/2023/07/Screen-Shot-2023-07-31-at-11.24.10-AM-e1692205607890.png?w=1000&h=667&crop=1",
+              "aspectRatio": "4/3"
+            }
+          },
+          "cast": [
+            {
+              "characterName": "Napoleon Bonaparte",
+              "actorName": "Joaquin Phoenix"
+            },
+            {
+              "characterName": "Josephine",
+              "actorName": "Vanessa Kirby"
+            }
+          ],
+          "crew": {
+            "directors": ["Ridley Scott"],
+            "producers": ["Ridley Scott", "Mark Huffam"],
+            "writers": ["David Scarpa"]
+          },
+          "classification": {
+            "rating": "+18",
+            "advisoryContent": [
+              "Strong Violence",
+              "Sexual Content",
+              "Brief Graphic Nudity"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
