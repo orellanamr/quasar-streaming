@@ -1,18 +1,25 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { Container, Movie } from '../types/movie.types';
+import { Container, LayoutType, Movie } from '../types/movie.types';
 import { MovieCard } from './MovieCard';
 
 interface HorizontalListProps {
   container: Container;
   onMoviePress: (movie: Movie) => void;
+  overrideLayout?: LayoutType;
 }
 
-export const HorizontalList: React.FC<HorizontalListProps> = ({ container, onMoviePress }) => {
+export const HorizontalList: React.FC<HorizontalListProps> = ({ 
+  container, 
+  onMoviePress, 
+  overrideLayout 
+}) => {
+  const layoutToUse = overrideLayout || container.layout;
+  
   const renderMovieCard = ({ item }: { item: Movie }) => (
     <MovieCard
       movie={item}
-      layout={container.layout}
+      layout={layoutToUse}
       onPress={() => onMoviePress(item)}
     />
   );

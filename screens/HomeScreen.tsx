@@ -11,12 +11,12 @@ import {
     StatusBar,
     StyleSheet,
     Text,
-    TouchableOpacity,
     View
 } from 'react-native';
 import { HorizontalList } from '../components/HorizontalList';
 import moviesData from '../data/movies.json';
 import { Container, Movie, MoviesData } from '../types/movie.types';
+import { getFallbackImage, getImageWithFallback } from '../utils/imageHelpers';
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -42,13 +42,12 @@ interface HomeScreenProps {
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [data, setData] = useState<MoviesData | null>(null);
   const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
+  const [heroImageError, setHeroImageError] = useState(false);
 
   useEffect(() => {
-    // Load data and find featured movie
     const movieData = moviesData as MoviesData;
     setData(movieData);
     
-    // Find the featured movie (isTopMovie: true)
     for (const container of movieData.containers) {
       const featured = container.items.find(movie => movie.isTopMovie);
       if (featured) {
@@ -60,19 +59,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const handleMoviePress = (movie: Movie) => {
     navigation.navigate('MovieDetails', { movie });
-  };
-
-  const handlePlayPress = () => {
-    if (featuredMovie) {
-      // Handle play action
-      console.log('Play movie:', featuredMovie.title);
-    }
-  };
-
-  const handleMoreInfoPress = () => {
-    if (featuredMovie) {
-      handleMoviePress(featuredMovie);
-    }
   };
 
   if (!data || !featuredMovie) {
@@ -91,44 +77,72 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         {/* Featured Movie Section */}
         <View style={styles.featuredSection}>
           <Image
-            source={{ uri: featuredMovie.posters.landscape.url }}
+            source={{ 
+              uri: heroImageError 
+                ? getFallbackImage('landscape')
+                : getImageWithFallback(featuredMovie, 'landscape')
+            }}
             style={styles.featuredImage}
             contentFit="cover"
+            onError={() => setHeroImageError(true)}
           />
+          {heroImageError && (
+            <View style={styles.heroFallbackOverlay}>
+              <Text style={styles.heroFallbackText}>Featured Content</Text>
+            </View>
+          )}
           
-          <View style={styles.featuredOverlay}>
-            <View style={styles.featuredContent}>
-              <Text style={styles.featuredTitle}>{featuredMovie.title}</Text>
-              <Text style={styles.featuredMeta}>
-                {featuredMovie.year} • {featuredMovie.duration} • {featuredMovie.quality}
-              </Text>
-              <Text style={styles.featuredDescription} numberOfLines={3}>
-                {featuredMovie.description}
-              </Text>
-              
-              <View style={styles.actionButtons}>
-                <TouchableOpacity style={styles.playButton} onPress={handlePlayPress}>
-                  <Ionicons name="play" size={24} color="#000000" />
-                  <Text style={styles.playButtonText}>Play</Text>
-                </TouchableOpacity>
-                
-                <TouchableOpacity style={styles.infoButton} onPress={handleMoreInfoPress}>
-                  <Ionicons name="information-circle-outline" size={24} color="#FFFFFF" />
-                  <Text style={styles.infoButtonText}>More Info</Text>
-                </TouchableOpacity>
-              </View>
+          {/* Dark Gradient Overlay */}
+          <View style={styles.gradientOverlay} />
+          
+          <View style={styles.featuredContent}>
+            <Text style={styles.featuredTitle}>{featuredMovie.title}</Text>
+    
+            <Text style={styles.featuredMeta}>
+              {featuredMovie.year} • {featuredMovie.duration} • {featuredMovie.rating}
+            </Text>
+            <View style={styles.topBadge}>
+              <Ionicons name="trophy" size={16} color="#ffffff" />
+              <Text style={styles.badgeText}>#1 in Movies Today</Text>
             </View>
           </View>
         </View>
 
-        {/* Movie Lists */}
-        {data.containers.map((container: Container) => (
-          <HorizontalList
-            key={container.id}
-            container={container}
-            onMoviePress={handleMoviePress}
-          />
-        ))}
+        {/* Movie Sections */}
+        {/* First: You might like - override to portrait-card */}
+        {data.containers
+          .filter(container => container.id === 'you-might-like')
+          .map((container: Container) => (
+            <HorizontalList
+              key={container.id}
+              container={container}
+              onMoviePress={handleMoviePress}
+              overrideLayout="portrait-card"
+            />
+          ))}
+
+        {/* Second: My List - override to landscape-card */}
+        {data.containers
+          .filter(container => container.id === 'my-list')
+          .map((container: Container) => (
+            <HorizontalList
+              key={container.id}
+              container={container}
+              onMoviePress={handleMoviePress}
+              overrideLayout="landscape-card"
+            />
+          ))}
+
+        {/* Third: Upcoming (using trending data for demo) - landscape-card */}
+        <HorizontalList
+          container={{
+            id: 'upcoming',
+            title: 'Upcoming',
+            layout: 'landscape-card',
+            items: data.containers.find(container => container.id === 'trending')?.items.slice(0, 6) || []
+          }}
+          onMoviePress={handleMoviePress}
+        />
         
         <View style={styles.bottomSpacing} />
       </ScrollView>
@@ -155,7 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   featuredSection: {
-    height: screenHeight * 0.6,
+    height: screenHeight * 0.5,
     position: 'relative',
     marginBottom: 24,
   },
@@ -163,47 +177,77 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  featuredOverlay: {
+  fallbackHeroContainer: {
+    width: '100%',
+    height: '100%',
+    position: 'relative',
+  },
+  heroFallbackOverlay: {
+    position: 'absolute',
+    top: '50%',
+    left: 0,
+    right: 0,
+    transform: [{ translateY: -20 }],
+    alignItems: 'center',
+  },
+  heroFallbackText: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  gradientOverlay: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    height: '60%',
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    justifyContent: 'flex-end',
+    height: '70%',
+    backgroundColor: 'rgba(0,0,0,0.8)',
   },
   featuredContent: {
-    padding: 16,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 20,
+  },
+  topBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 16,
+  },
+  badgeText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '600',
+    marginLeft: 6,
   },
   featuredTitle: {
     color: '#FFFFFF',
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: 'bold',
+    textAlign: 'center',
     marginBottom: 8,
   },
   featuredMeta: {
     color: '#CCCCCC',
     fontSize: 14,
-    marginBottom: 12,
-  },
-  featuredDescription: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    lineHeight: 22,
+    textAlign: 'center',
     marginBottom: 24,
   },
   actionButtons: {
     flexDirection: 'row',
-    gap: 12,
+    justifyContent: 'center',
+    gap: 16,
   },
   playButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 24,
+    paddingHorizontal: 32,
     paddingVertical: 12,
     borderRadius: 8,
-    flex: 1,
+    minWidth: 120,
     justifyContent: 'center',
   },
   playButtonText: {
@@ -212,17 +256,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 8,
   },
-  infoButton: {
+  myListButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0.2)',
-    paddingHorizontal: 24,
+    paddingHorizontal: 32,
     paddingVertical: 12,
     borderRadius: 8,
-    flex: 1,
+    minWidth: 120,
     justifyContent: 'center',
   },
-  infoButtonText: {
+  myListButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
