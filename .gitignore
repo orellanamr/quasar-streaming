@@ -43,7 +43,6 @@ yarn-error.*
 
 # TypeScript
 *.tsbuildinfo
-*.d.ts
 
 # Editor directories and files
 .vscode/
@@ -59,7 +58,6 @@ ehthumbs.db
 # Logs
 logs/
 *.log
-.log
 
 # Runtime data
 pids/
